@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Welcome 2026 BIG BLAST 🔊🎆</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    height:100vh;
+    background: linear-gradient(270deg,#ff512f,#dd2476,#1e90ff,#7f00ff);
+    background-size:600% 600%;
+    animation:bg 8s infinite alternate;
+    font-family:Segoe UI,sans-serif;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
+}
+
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    color:white;
+    z-index:10;
+}
+
+.center h1{
+    font-size:3.5rem;
+    text-shadow:0 0 30px white;
+}
+
+/* BIG ROCKET */
+.rocket{
+    position:absolute;
+    bottom:-40px;
+    width:8px;
+    height:60px;
+    background:linear-gradient(white,orange,red);
+    border-radius:4px;
+    animation:launch 2.5s ease-out forwards;
+    box-shadow:0 0 20px orange;
+}
+
+@keyframes launch{
+    to{transform:translateY(-85vh)}
+}
+
+/* BIG EXPLOSION */
+.spark{
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    animation:explode 2s ease-out forwards;
+}
+
+@keyframes explode{
+    to{
+        transform:translate(var(--x),var(--y));
+        opacity:0;
+    }
+}
+
+/* SCREEN SHAKE */
+.shake{
+    animation:shake 0.4s;
+}
+
+@keyframes shake{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(5px,5px)}
+    50%{transform:translate(-5px,-5px)}
+    75%{transform:translate(5px,-5px)}
+    100%{transform:translate(0,0)}
+}
+
+/* HEART */
+.heart{
+    position:absolute;
+    color:pink;
+    animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh);opacity:1}
+    to{transform:translateY(110vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+    <h1>🎉 WELCOME 2026 🎉</h1>
+    <p>Big blast • Big dreams • Big happiness ❤️</p>
+</div>
+
+<!-- SOUNDS -->
+<audio id="launchSound" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-rocket-whoosh-1714.mp3"></audio>
+<audio id="blastSound" src="https://assets.mixkit.co/sfx/preview/mixkit-firework-explosion-1701.mp3"></audio>
+
+<script>
+setInterval(()=>{
+    let launch=document.getElementById("launchSound");
+    let blast=document.getElementById("blastSound");
+
+    let r=document.createElement("div");
+    r.className="rocket";
+    r.style.left=Math.random()*90+"vw";
+    document.body.appendChild(r);
+
+    launch.currentTime=0;
+    launch.play();
+
+    setTimeout(()=>{
+        document.body.classList.add("shake");
+
+        blast.currentTime=0;
+        blast.play();
+
+        for(let i=0;i<70;i++){
+            let s=document.createElement("div");
+            s.className="spark";
+            s.style.left=r.offsetLeft+"px";
+            s.style.bottom="85vh";
+            s.style.background=`hsl(${Math.random()*360},100%,60%)`;
+            s.style.setProperty("--x",(Math.random()*500-250)+"px");
+            s.style.setProperty("--y",(Math.random()*500-250)+"px");
+            document.body.appendChild(s);
+            setTimeout(()=>s.remove(),2000);
+        }
+
+        setTimeout(()=>document.body.classList.remove("shake"),400);
+        r.remove();
+    },2300);
+},1400);
+
+// HEART SPRINKLE
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(20+Math.random()*25)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},350);
+</script>
+
+</body>
+</html>
