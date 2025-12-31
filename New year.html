@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Welcome 2026 🎆</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    height:100vh;
+    background: linear-gradient(270deg,#ff4e50,#1e90ff,#7f00ff);
+    background-size:600% 600%;
+    animation:bg 10s infinite alternate;
+    font-family:Segoe UI,sans-serif;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
+}
+
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    color:white;
+    z-index:10;
+}
+
+.center h1{
+    font-size:3rem;
+    text-shadow:0 0 20px white;
+}
+
+.center p{
+    font-size:1.2rem;
+}
+
+/* Firecracker rocket */
+.rocket{
+    position:absolute;
+    bottom:0;
+    width:4px;
+    height:30px;
+    background:white;
+    animation:launch 2s linear forwards;
+}
+
+@keyframes launch{
+    to{transform:translateY(-80vh)}
+}
+
+/* Explosion */
+.spark{
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    animation:explode 1.5s ease-out forwards;
+}
+
+@keyframes explode{
+    to{
+        transform:translate(var(--x),var(--y));
+        opacity:0;
+    }
+}
+
+/* Heart sprinkle */
+.heart{
+    position:absolute;
+    color:pink;
+    font-size:20px;
+    animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh);opacity:1}
+    to{transform:translateY(110vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="center">
+    <h1>🎉 Welcome 2026 🎉</h1>
+    <p>New hopes • New dreams • New beginnings ❤️</p>
+</div>
+
+<script>
+// Continuous firecrackers
+setInterval(()=>{
+    let r=document.createElement("div");
+    r.className="rocket";
+    r.style.left=Math.random()*100+"vw";
+    document.body.appendChild(r);
+
+    setTimeout(()=>{
+        for(let i=0;i<25;i++){
+            let s=document.createElement("div");
+            s.className="spark";
+            s.style.left=r.offsetLeft+"px";
+            s.style.bottom="80vh";
+            s.style.background=`hsl(${Math.random()*360},100%,60%)`;
+            s.style.setProperty("--x",(Math.random()*200-100)+"px");
+            s.style.setProperty("--y",(Math.random()*200-100)+"px");
+            document.body.appendChild(s);
+
+            setTimeout(()=>s.remove(),1500);
+        }
+        r.remove();
+    },1800);
+},800);
+
+// Heart sprinkle
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},400);
+</script>
+
+</body>
+</html>
